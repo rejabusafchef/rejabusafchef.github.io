@@ -1,4 +1,4 @@
-import { useState, createContext } from "react";
+import { useState, useLayoutEffect, createContext } from "react";
 import { HashRouter, Routes, Route, Link } from "react-router-dom";
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -12,6 +12,17 @@ function App() {
     const [selectedUser, setSelectedUser] = useState();
     const [homeIsActive, setHomeIsActive] = useState(true);
     const [usersIsActive, setUsersIsActive] = useState(false);
+    const [navigate, setNavigate] = useState(false);
+    useLayoutEffect(() => {
+        if (window.location.href.endsWith("/#/users")) {
+            setHomeIsActive(false);
+            setUsersIsActive(true);
+        }
+        if (window.location.href.endsWith("/#/")) {
+            setHomeIsActive(true);
+            setUsersIsActive(false);
+        }
+    }, [navigate]);
     return (
         <HashRouter>
             <UserContext.Provider value={{ selectedUser, setSelectedUser }}>
@@ -19,13 +30,11 @@ function App() {
                     <Container>
                         <Nav className="me-auto navbar-dark fixed-top bg-dark">
                             <Nav.Link as={Link} to="/" className={homeIsActive && "active"} onClick={() => {
-                                setHomeIsActive(true);
-                                setUsersIsActive(false);
+                              setNavigate(!navigate);
                             }}>Home</Nav.Link>
                             <Nav.Link as={Link} to="/users" className={usersIsActive && "active"} onClick={() => {
-                                setUsersIsActive(true);
-                                setHomeIsActive(false);
-                                setSelectedUser();
+                              setNavigate(!navigate);
+                              setSelectedUser();
                             }}>Users</Nav.Link>
                         </Nav>
                     </Container>
