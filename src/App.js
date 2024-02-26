@@ -10,7 +10,7 @@ const UserContext = createContext();
 
 function App() {
     const [selectedUser, setSelectedUser] = useState();
-    const [homeIsActive, setHomeIsActive] = useState(false);
+    const [homeIsActive, setHomeIsActive] = useState(true);
     const [usersIsActive, setUsersIsActive] = useState(false);
     return (
         <HashRouter>
