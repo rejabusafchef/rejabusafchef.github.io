@@ -10,17 +10,14 @@ const UserContext = createContext();
 
 function App() {
     const [selectedUser, setSelectedUser] = useState();
-    const [homeIsActive, setHomeIsActive] = useState(true);
-    const [usersIsActive, setUsersIsActive] = useState(false);
+    const [activePath, setActivePath] = useState('');
     const [navigate, setNavigate] = useState(false);
     useLayoutEffect(() => {
         if (window.location.href.endsWith("/#/users")) {
-            setHomeIsActive(false);
-            setUsersIsActive(true);
+            setActivePath('users')
         }
         if (window.location.href.endsWith("/#/")) {
-            setHomeIsActive(true);
-            setUsersIsActive(false);
+            setActivePath('')
         }
     }, [navigate]);
     return (
@@ -29,10 +26,10 @@ function App() {
                 <Navbar className="bg-body-tertiary">
                     <Container>
                         <Nav className="me-auto navbar-dark fixed-top bg-dark">
-                            <Nav.Link as={Link} to="/" className={homeIsActive && "active"} onClick={() => {
+                            <Nav.Link as={Link} to="/" className={(activePath === '') && "active"} onClick={() => {
                               setNavigate(!navigate);
                             }}>Home</Nav.Link>
-                            <Nav.Link as={Link} to="/users" className={usersIsActive && "active"} onClick={() => {
+                            <Nav.Link as={Link} to="/users" className={(activePath === 'users') && "active"} onClick={() => {
                               setNavigate(!navigate);
                               setSelectedUser();
                             }}>Users</Nav.Link>
