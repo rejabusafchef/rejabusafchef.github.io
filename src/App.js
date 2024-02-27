@@ -11,15 +11,14 @@ const UserContext = createContext();
 function App() {
     const [selectedUser, setSelectedUser] = useState();
     const [activePath, setActivePath] = useState('');
-    const [navigate, setNavigate] = useState(false);
     useLayoutEffect(() => {
         if (window.location.href.endsWith("/#/users")) {
-            setActivePath('users')
+            setActivePath('users');
         }
         if (window.location.href.endsWith("/#/")) {
-            setActivePath('')
+            setActivePath('');
         }
-    }, [navigate]);
+    }, [activePath]);
     return (
         <HashRouter>
             <UserContext.Provider value={{ selectedUser, setSelectedUser }}>
@@ -27,11 +26,11 @@ function App() {
                     <Container>
                         <Nav className="me-auto navbar-dark fixed-top bg-dark">
                             <Nav.Link as={Link} to="/" className={(activePath === '') && "active"} onClick={() => {
-                              setNavigate(!navigate);
+                                setActivePath('');
                             }}>Home</Nav.Link>
                             <Nav.Link as={Link} to="/users" className={(activePath === 'users') && "active"} onClick={() => {
-                              setNavigate(!navigate);
-                              setSelectedUser();
+                                setActivePath('users');
+                                setSelectedUser();
                             }}>Users</Nav.Link>
                         </Nav>
                     </Container>
